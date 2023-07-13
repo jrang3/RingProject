@@ -4,99 +4,61 @@ using UnityEngine;
 
 public class FormationController : MonoBehaviour
 {
-    public GameObject prefab;
-    private bool moveUp = true;
-    private bool moveDown = true;
-    private bool moveRight = true;
 
+    public GameObject prefab;
+    [SerializeField] private float amplitude;
+    [SerializeField] private float speed;
+    [SerializeField] private float phase_shift;
+    [SerializeField] private float percent_plus;
+    [SerializeField] private float percent_cross;
+    [SerializeField] private float radius; //#Changing radius throughout doesn't have effect an output since radius was used only in the beginning
 
     //private GameObject[] instantiated_objs;
     private List<GameObject> gameObjects = new List<GameObject>(); //holds list of game objects that are instaitaed
     // Start is called before the first frame update
+    //private UpdatePosSpheres update_pos_spheres;
     void Start()
     {
         //Creates ring of circles
         this.CircleFormation();
+        //update_pos_spheres = GetComponent<UpdatePosSpheres>();
+        //Debug.Log(gameObjects[0].transform.position);
 
 
         
     }
 
     // Update is called once per frame
+
     void Update()
     {
         //Used to move the circular objects up and down
         for(int i = 0; i < gameObjects.Count; i++) {
             
+            // float gravitational_constant = 6.67430f * Mathf.Pow(10,-11);
+            // float speed_of_light = 299792458.0f;
+            // float radius = 10.0f;
 
-           if (i == 4 || i == 5) { //Represent circles at the top
-                if (moveUp) {
-                    gameObjects[i].transform.position+=new Vector3(0,0.001f, 0);
-
-                }
-                else {
-                    gameObjects[i].transform.position+=new Vector3(0,-0.001f, 0);
-                }
-
-                if(gameObjects[i].transform.position.y > 13.0f) {
-                    moveUp = false;
-                }
-                if(gameObjects[i].transform.position.y < 9.5f) {
-                    moveUp = true;
-                }
-                // Debug.Log("Y pos: "+gameObjects[i].transform.position.y.ToString());
-
-            }
-            else if (i == 0 || i == 9) { //Represent circles at bottom
-                //gameObjects[i].transform.position+=new Vector3(0,-0.000325f, 0);
-                if (moveDown) {
-                    gameObjects[i].transform.position+=new Vector3(0,-0.001f, 0);
-
-                }
-                else {
-                    gameObjects[i].transform.position+=new Vector3(0,0.001f, 0);
-                }
-
-                if(gameObjects[i].transform.position.y < -2.0f) {
-                    moveDown = false;
-                }
-                if(gameObjects[i].transform.position.y > 2.0f) {
-                    moveDown = true;
-                }
-                // Debug.Log("Y pos: "+gameObjects[i].transform.position.y.ToString());
-                
-            }
-            // if (i == 6 || i == 7 || i == 8) { //represents circles on left
-            //     //gameObjects[i].transform.position+=new Vector3(0.000325f,0, 0);
-            //     if (moveRight) {
-            //         gameObjects[i].transform.position+=new Vector3(0.000325f,0, 0);
-
-            //     }
-            //     else {
-            //         gameObjects[i].transform.position-=new Vector3(0.000325f,0, 0);
-            //     }
-
-            //     if(gameObjects[i].transform.position.x > -1.2f) {
-            //         moveRight = false;
-            //     }
-            //     if(gameObjects[i].transform.position.x < -3.0f) {
-            //         moveDown = true;
-            //     }
-            //     Debug.Log("X pos: "+gameObjects[i].transform.position.x.ToString());
-
-            // }
-            // else { //represents circles on right
-            //     gameObjects[i].transform.position+=new Vector3(-0.000325f,0, 0);
-            // }
-
-
-            
+            // float c = (gravitational_constant) / (2*Mathf.Pow(speed_of_light, 4 * radius));
+            //c seems to be very small causing output to be 0 
             
 
+            //Users have the ability to change phase shift, percent plus/cross mode, amp, and speed (Duplicate in the ring of spheres seems to be showing up)
+            float h_plus = amplitude*Mathf.Cos(speed*Time.time + phase_shift);  
+            float h_cross = amplitude*Mathf.Sin(speed*Time.time + phase_shift);
+            float x_pos = gameObjects[i].transform.position.x;
+            float y_pos = gameObjects[i].transform.position.y;
+            gameObjects[i].transform.position+=new Vector3(( percent_plus/100 *h_plus*x_pos +  percent_cross/100*h_cross * y_pos) / 1250, (percent_cross/100 *h_cross * x_pos - percent_plus/100*h_plus*y_pos) / 10000 , 0); //multiplying it by c doesn't seem to have an effect since c is very small
+
+            //Users don't have the ability to change amp, speed, phase sift, percent plus and cross
+
+            // float h_plus = 3.0f*Mathf.Cos(3.0f*Time.time); //phase_shift = 0 
+            // float h_cross = 3.0f*Mathf.Sin(3.0f*Time.time );
+            // float x_pos = gameObjects[i].transform.position.x;
+            // float y_pos = gameObjects[i].transform.position.y;
+            // gameObjects[i].transform.position+=new Vector3((h_plus*x_pos +  0*h_cross * y_pos) / 1250, (0*h_cross * x_pos - h_plus*y_pos) / 10000 , 0);
 
         }
-        
-        
         
         
     }
@@ -111,42 +73,36 @@ public class FormationController : MonoBehaviour
 
             float angle = i * (2 * 3.1459f / 10); //find an angle for every sphere that we want to populate, divide by 10 because that's number of spheres we want
 
-            float x = Mathf.Cos(angle) * 3.5f; //offset for each sphere
-            float y = Mathf.Sin(angle) * 3.5f;
 
-            targetPosition = new Vector3(targetPosition.x + x, targetPosition.y + y, 0);
+            //Users have ability to change radius of ring (offset for each sphere)
+            float x = Mathf.Cos(angle) * radius; 
+            float y = Mathf.Sin(angle) * radius;
+
+            //Users don't have the ability to change radius of ring
+            // float x = Mathf.Cos(angle) * 3.5f; //offset for each sphere
+            // float y = Mathf.Sin(angle) * 3.5f;
+
+
+            targetPosition = new Vector3(targetPosition.x + x, targetPosition.y + y, 0); //moving (0,0,0) to the certain offset which defined by x and y
 
             instance.transform.position = targetPosition;
-
+            
             
         }
-        //prefab.transform.position += new Vector3(0, 2, 0);
-
+        
 
     }
-    // private void MoveDirection(bool direction, int ball_num) {
-    //     GameObject obj =  gameObjects[ball_num];
-    //     if (ball_num == 4 || ball_num == 5) {
-    //         if (direction) {
-    //             obj.transform.position+=new Vector3(0,0.000325f, 0);
-    //         }
-    //         else {
-    //             obj.transform.position-=new Vector3(0,0.000325f, 0);
+    public Vector3 MovePlusMode(Vector3 sphere_pos) {
+        float h_plus = 3.0f*Mathf.Cos(3.0f*Time.time);
+        float h_cross = 3.0f*Mathf.Sin(3.0f*Time.time);
+        Vector3 output;
+        output.x = sphere_pos.x + (h_plus*sphere_pos.x) / 1250;
+        output.y = (-h_plus*sphere_pos.y) / 10000;
+        output.z = 0;
+        return output;
 
-    //         }
-    //         if (obj.transform.position.y > 12.0f) {
-    //             direction = false;
-    //         }
-    //         else if (obj.transform.position.y <  7.5f) {
-    //             direction = true;
-    //         }
+    }
 
-
-    //     }
-
-    
-
-    // }
     
     
 }
