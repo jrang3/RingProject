@@ -356,7 +356,7 @@ MonoBehaviour:
   phase_shift: 0
   percent_plus: 100
   percent_cross: 0
-  radius: 3.5
+  radius: 1.5
 --- !u!4 &1405152623
 Transform:
   m_ObjectHideFlags: 0

@@ -50,13 +50,6 @@ public class FormationController : MonoBehaviour
             float y_pos = gameObjects[i].transform.position.y;
             gameObjects[i].transform.position+=new Vector3(( percent_plus/100 *h_plus*x_pos +  percent_cross/100*h_cross * y_pos) / 1250, (percent_cross/100 *h_cross * x_pos - percent_plus/100*h_plus*y_pos) / 10000 , 0); //multiplying it by c doesn't seem to have an effect since c is very small
 
-            //Users don't have the ability to change amp, speed, phase sift, percent plus and cross
-
-            // float h_plus = 3.0f*Mathf.Cos(3.0f*Time.time); //phase_shift = 0 
-            // float h_cross = 3.0f*Mathf.Sin(3.0f*Time.time );
-            // float x_pos = gameObjects[i].transform.position.x;
-            // float y_pos = gameObjects[i].transform.position.y;
-            // gameObjects[i].transform.position+=new Vector3((h_plus*x_pos +  0*h_cross * y_pos) / 1250, (0*h_cross * x_pos - h_plus*y_pos) / 10000 , 0);
 
         }
         
@@ -77,12 +70,6 @@ public class FormationController : MonoBehaviour
             //Users have ability to change radius of ring (offset for each sphere)
             float x = Mathf.Cos(angle) * radius; 
             float y = Mathf.Sin(angle) * radius;
-
-            //Users don't have the ability to change radius of ring
-            // float x = Mathf.Cos(angle) * 3.5f; //offset for each sphere
-            // float y = Mathf.Sin(angle) * 3.5f;
-
-
             targetPosition = new Vector3(targetPosition.x + x, targetPosition.y + y, 0); //moving (0,0,0) to the certain offset which defined by x and y
 
             instance.transform.position = targetPosition;
@@ -92,16 +79,7 @@ public class FormationController : MonoBehaviour
         
 
     }
-    public Vector3 MovePlusMode(Vector3 sphere_pos) {
-        float h_plus = 3.0f*Mathf.Cos(3.0f*Time.time);
-        float h_cross = 3.0f*Mathf.Sin(3.0f*Time.time);
-        Vector3 output;
-        output.x = sphere_pos.x + (h_plus*sphere_pos.x) / 1250;
-        output.y = (-h_plus*sphere_pos.y) / 10000;
-        output.z = 0;
-        return output;
 
-    }
 
     
     
