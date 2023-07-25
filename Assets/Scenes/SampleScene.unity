@@ -317,7 +317,6 @@ MonoBehaviour:
   prefab: {fileID: 5719823607635072314, guid: c63c9982065044d0085d2f84aaed9d92, type: 3}
   amplitude: 0
   speed: 0
-  phase_shift: 0
   percent_plus: 0
   percent_cross: 0
   radius: 0
@@ -353,7 +352,6 @@ MonoBehaviour:
   prefab: {fileID: 5719823607635072314, guid: c63c9982065044d0085d2f84aaed9d92, type: 3}
   amplitude: 3
   speed: 3
-  phase_shift: 100
   percent_plus: 100
   percent_cross: 0
   radius: 2
