@@ -351,10 +351,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5719823607635072314, guid: c63c9982065044d0085d2f84aaed9d92, type: 3}
   amplitude: 3
-  speed: 3
+  speed: 6
   percent_plus: 100
   percent_cross: 0
-  radius: 2
+  radius: 3
 --- !u!4 &1405152623
 Transform:
   m_ObjectHideFlags: 0
