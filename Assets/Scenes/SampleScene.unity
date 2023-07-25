@@ -351,7 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5719823607635072314, guid: c63c9982065044d0085d2f84aaed9d92, type: 3}
   amplitude: 3
-  speed: 6
+  speed: 10
   percent_plus: 100
   percent_cross: 0
   radius: 3
@@ -363,7 +363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405152621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.40512878, y: 1.7494943, z: -6.919411}
+  m_LocalPosition: {x: 6, y: 5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
